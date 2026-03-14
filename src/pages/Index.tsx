@@ -7,6 +7,9 @@ import InventoryTable from "@/components/InventoryTable";
 import DonationForm from "@/components/DonationForm";
 import DispatchSuggestions from "@/components/DispatchSuggestions";
 import ConcientizacionSection from "@/components/ConcientizacionSection";
+import NutritionalPriorityTable from "@/components/NutritionalPriorityTable";
+import DonorPanel from "@/components/DonorPanel";
+import ImpactReportButton from "@/components/ImpactReportButton";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("concientizacion");
@@ -23,9 +26,13 @@ const Index = () => {
             <KpiCards />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <BubbleChartComponent />
-              <InsightsPanel />
+              <DonorPanel />
             </div>
-            <DispatchSuggestions />
+            <InsightsPanel />
+            <NutritionalPriorityTable />
+            <div className="flex justify-center pt-2">
+              <ImpactReportButton />
+            </div>
           </>
         )}
 
@@ -41,7 +48,7 @@ const Index = () => {
 
       <footer className="border-t mt-8 py-4">
         <div className="container mx-auto px-4 text-center text-xs text-muted-foreground">
-          SENA-Alimentos © 2026 · Proyecto Académico de Trazabilidad Logística · Datos simulados con fines demostrativos
+          SENA-Alimentos: Inteligencia Logística contra el Hambre © 2026 · Proyecto Académico de Trazabilidad Logística · Datos simulados con fines demostrativos
         </div>
       </footer>
     </div>

@@ -33,6 +33,15 @@ export default {
           warning: "hsl(var(--alert-warning))",
           ok: "hsl(var(--alert-ok))",
         },
+        fao: {
+          DEFAULT: "hsl(var(--fao-blue))",
+          light: "hsl(var(--fao-light))",
+          dark: "hsl(var(--fao-dark))",
+        },
+        abaco: {
+          DEFAULT: "hsl(var(--abaco-red))",
+          light: "hsl(var(--abaco-light))",
+        },
         earth: {
           dark: "hsl(var(--earth-dark))",
           warm: "hsl(var(--earth-warm))",
@@ -61,11 +70,21 @@ export default {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.6" },
         },
+        "slide-in-left": {
+          from: { opacity: "0", transform: "translateX(-24px)" },
+          to: { opacity: "1", transform: "translateX(0)" },
+        },
+        "count-up": {
+          from: { opacity: "0", transform: "scale(0.85)" },
+          to: { opacity: "1", transform: "scale(1)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "pulse-alert": "pulse-alert 2s ease-in-out infinite",
+        "slide-in-left": "slide-in-left 0.5s ease-out",
+        "count-up": "count-up 1.2s ease-out",
       },
     },
   },

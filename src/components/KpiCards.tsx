@@ -1,23 +1,23 @@
-import { Package, AlertTriangle, MapPin, TrendingUp } from "lucide-react";
+import { Package, AlertTriangle, MapPin, Apple } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { getKilosRescatados, getLotesAlertaCritica, getMunicipiosAltoIPM, inventario } from "@/data/mockData";
+import { getKilosMicronutrientes, getLotesAlertaCritica, getMunicipiosAltoIPM, inventario } from "@/data/mockData";
 
 const kpis = [
   {
-    label: "Kilos Rescatados",
-    value: getKilosRescatados().toLocaleString("es-CO"),
-    suffix: "kg",
-    icon: Package,
-    color: "text-alert-ok" as const,
-    bg: "bg-alert-ok/10" as const,
+    label: "Micro-nutrientes Rescatados",
+    value: getKilosMicronutrientes().toLocaleString("es-CO"),
+    suffix: "kg frutas y verduras",
+    icon: Apple,
+    color: "text-green-600" as const,
+    bg: "bg-green-100" as const,
   },
   {
     label: "Lotes Alerta Crítica",
     value: getLotesAlertaCritica(),
     suffix: "lotes < 72h",
     icon: AlertTriangle,
-    color: "text-alert-critical" as const,
-    bg: "bg-alert-critical/10" as const,
+    color: "text-red-600" as const,
+    bg: "bg-red-100" as const,
     pulse: true,
   },
   {
@@ -25,16 +25,16 @@ const kpis = [
     value: getMunicipiosAltoIPM().length,
     suffix: "cobertura objetivo",
     icon: MapPin,
-    color: "text-accent" as const,
-    bg: "bg-accent/10" as const,
+    color: "text-fao" as const,
+    bg: "bg-blue-100" as const,
   },
   {
     label: "Inventario Activo",
     value: inventario.filter((i) => i.estado === "Disponible").reduce((s, i) => s + i.cantidad_kg, 0).toLocaleString("es-CO"),
     suffix: "kg disponibles",
-    icon: TrendingUp,
-    color: "text-primary" as const,
-    bg: "bg-primary/10" as const,
+    icon: Package,
+    color: "text-fao-dark" as const,
+    bg: "bg-blue-50" as const,
   },
 ];
 

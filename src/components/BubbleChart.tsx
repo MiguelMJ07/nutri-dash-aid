@@ -7,7 +7,7 @@ const data = getBubbleChartData();
 function getColor(ipm: number) {
   if (ipm >= 80) return "hsl(4, 72%, 50%)";
   if (ipm >= 60) return "hsl(35, 90%, 55%)";
-  if (ipm >= 40) return "hsl(145, 45%, 40%)";
+  if (ipm >= 40) return "hsl(207, 70%, 50%)";
   return "hsl(145, 45%, 55%)";
 }
 
@@ -62,9 +62,9 @@ export default function BubbleChartComponent() {
           </ScatterChart>
         </ResponsiveContainer>
         <div className="flex items-center justify-center gap-6 mt-3 text-xs text-muted-foreground">
-          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-alert-critical inline-block" /> IPM ≥ 80</span>
-          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-alert-warning inline-block" /> IPM 60-79</span>
-          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-alert-ok inline-block" /> IPM 40-59</span>
+          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-red-600 inline-block" /> IPM ≥ 80</span>
+          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-amber-500 inline-block" /> IPM 60-79</span>
+          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-fao-light inline-block" /> IPM 40-59</span>
         </div>
       </CardContent>
     </Card>

@@ -12,6 +12,7 @@ export interface Municipio {
   codigo_dane: string;
   ipm: number; // Índice de Pobreza Multidimensional
   poblacion: number;
+  mortalidad_infantil: number; // muertes por 1000 nacidos vivos
 }
 
 export interface Categoria {
@@ -49,6 +50,15 @@ export interface Inventario {
   municipio_destino_id?: number;
 }
 
+// ==================== CONSTANTS ====================
+export const RECURSOS_POR_TONELADA = {
+  litros_agua: 214000,
+  kg_metano: 580,
+  dona_juana_tons_dia: 6500,
+};
+
+export const KG_POR_RACION = 0.5;
+
 // ==================== DATA ====================
 
 export const departamentos: Departamento[] = [
@@ -75,30 +85,30 @@ export const departamentos: Departamento[] = [
 ];
 
 export const municipios: Municipio[] = [
-  { id: 1, departamento_id: 1, nombre: "Uribia", codigo_dane: "44847", ipm: 92.2, poblacion: 187000 },
-  { id: 2, departamento_id: 1, nombre: "Manaure", codigo_dane: "44560", ipm: 89.5, poblacion: 120000 },
-  { id: 3, departamento_id: 2, nombre: "Quibdó", codigo_dane: "27001", ipm: 65.8, poblacion: 130000 },
-  { id: 4, departamento_id: 2, nombre: "Alto Baudó", codigo_dane: "27025", ipm: 88.1, poblacion: 35000 },
-  { id: 5, departamento_id: 3, nombre: "Guapi", codigo_dane: "19318", ipm: 78.3, poblacion: 30000 },
-  { id: 6, departamento_id: 3, nombre: "López de Micay", codigo_dane: "19418", ipm: 85.6, poblacion: 22000 },
-  { id: 7, departamento_id: 4, nombre: "Barbacoas", codigo_dane: "52079", ipm: 80.1, poblacion: 45000 },
-  { id: 8, departamento_id: 4, nombre: "Olaya Herrera", codigo_dane: "52490", ipm: 82.4, poblacion: 33000 },
-  { id: 9, departamento_id: 5, nombre: "Tierralta", codigo_dane: "23807", ipm: 72.9, poblacion: 100000 },
-  { id: 10, departamento_id: 6, nombre: "San Onofre", codigo_dane: "70713", ipm: 70.5, poblacion: 50000 },
-  { id: 11, departamento_id: 7, nombre: "El Carmen de Bolívar", codigo_dane: "13244", ipm: 68.2, poblacion: 75000 },
-  { id: 12, departamento_id: 8, nombre: "Santa Marta", codigo_dane: "47001", ipm: 45.3, poblacion: 530000 },
-  { id: 13, departamento_id: 9, nombre: "Valledupar", codigo_dane: "20001", ipm: 42.1, poblacion: 480000 },
-  { id: 14, departamento_id: 10, nombre: "Tibú", codigo_dane: "54810", ipm: 74.6, poblacion: 55000 },
-  { id: 15, departamento_id: 11, nombre: "Medellín", codigo_dane: "05001", ipm: 15.4, poblacion: 2500000 },
-  { id: 16, departamento_id: 12, nombre: "Buenaventura", codigo_dane: "76109", ipm: 66.9, poblacion: 420000 },
-  { id: 17, departamento_id: 13, nombre: "Bogotá", codigo_dane: "11001", ipm: 12.1, poblacion: 7900000 },
-  { id: 18, departamento_id: 14, nombre: "Sogamoso", codigo_dane: "15759", ipm: 25.3, poblacion: 115000 },
-  { id: 19, departamento_id: 19, nombre: "Puerto Carreño", codigo_dane: "99001", ipm: 60.2, poblacion: 18000 },
-  { id: 20, departamento_id: 20, nombre: "Leticia", codigo_dane: "91001", ipm: 55.8, poblacion: 48000 },
-  { id: 21, departamento_id: 1, nombre: "Riohacha", codigo_dane: "44001", ipm: 58.4, poblacion: 280000 },
-  { id: 22, departamento_id: 2, nombre: "Istmina", codigo_dane: "27361", ipm: 75.2, poblacion: 28000 },
-  { id: 23, departamento_id: 18, nombre: "Arauca", codigo_dane: "81001", ipm: 48.7, poblacion: 92000 },
-  { id: 24, departamento_id: 5, nombre: "Montería", codigo_dane: "23001", ipm: 35.2, poblacion: 460000 },
+  { id: 1, departamento_id: 1, nombre: "Uribia", codigo_dane: "44847", ipm: 92.2, poblacion: 187000, mortalidad_infantil: 42.8 },
+  { id: 2, departamento_id: 1, nombre: "Manaure", codigo_dane: "44560", ipm: 89.5, poblacion: 120000, mortalidad_infantil: 39.1 },
+  { id: 3, departamento_id: 2, nombre: "Quibdó", codigo_dane: "27001", ipm: 65.8, poblacion: 130000, mortalidad_infantil: 28.7 },
+  { id: 4, departamento_id: 2, nombre: "Alto Baudó", codigo_dane: "27025", ipm: 88.1, poblacion: 35000, mortalidad_infantil: 38.4 },
+  { id: 5, departamento_id: 3, nombre: "Guapi", codigo_dane: "19318", ipm: 78.3, poblacion: 30000, mortalidad_infantil: 30.2 },
+  { id: 6, departamento_id: 3, nombre: "López de Micay", codigo_dane: "19418", ipm: 85.6, poblacion: 22000, mortalidad_infantil: 35.9 },
+  { id: 7, departamento_id: 4, nombre: "Barbacoas", codigo_dane: "52079", ipm: 80.1, poblacion: 45000, mortalidad_infantil: 32.1 },
+  { id: 8, departamento_id: 4, nombre: "Olaya Herrera", codigo_dane: "52490", ipm: 82.4, poblacion: 33000, mortalidad_infantil: 33.8 },
+  { id: 9, departamento_id: 5, nombre: "Tierralta", codigo_dane: "23807", ipm: 72.9, poblacion: 100000, mortalidad_infantil: 26.5 },
+  { id: 10, departamento_id: 6, nombre: "San Onofre", codigo_dane: "70713", ipm: 70.5, poblacion: 50000, mortalidad_infantil: 24.8 },
+  { id: 11, departamento_id: 7, nombre: "El Carmen de Bolívar", codigo_dane: "13244", ipm: 68.2, poblacion: 75000, mortalidad_infantil: 22.3 },
+  { id: 12, departamento_id: 8, nombre: "Santa Marta", codigo_dane: "47001", ipm: 45.3, poblacion: 530000, mortalidad_infantil: 14.6 },
+  { id: 13, departamento_id: 9, nombre: "Valledupar", codigo_dane: "20001", ipm: 42.1, poblacion: 480000, mortalidad_infantil: 13.2 },
+  { id: 14, departamento_id: 10, nombre: "Tibú", codigo_dane: "54810", ipm: 74.6, poblacion: 55000, mortalidad_infantil: 27.9 },
+  { id: 15, departamento_id: 11, nombre: "Medellín", codigo_dane: "05001", ipm: 15.4, poblacion: 2500000, mortalidad_infantil: 8.1 },
+  { id: 16, departamento_id: 12, nombre: "Buenaventura", codigo_dane: "76109", ipm: 66.9, poblacion: 420000, mortalidad_infantil: 25.4 },
+  { id: 17, departamento_id: 13, nombre: "Bogotá", codigo_dane: "11001", ipm: 12.1, poblacion: 7900000, mortalidad_infantil: 7.2 },
+  { id: 18, departamento_id: 14, nombre: "Sogamoso", codigo_dane: "15759", ipm: 25.3, poblacion: 115000, mortalidad_infantil: 10.5 },
+  { id: 19, departamento_id: 19, nombre: "Puerto Carreño", codigo_dane: "99001", ipm: 60.2, poblacion: 18000, mortalidad_infantil: 21.7 },
+  { id: 20, departamento_id: 20, nombre: "Leticia", codigo_dane: "91001", ipm: 55.8, poblacion: 48000, mortalidad_infantil: 19.8 },
+  { id: 21, departamento_id: 1, nombre: "Riohacha", codigo_dane: "44001", ipm: 58.4, poblacion: 280000, mortalidad_infantil: 20.3 },
+  { id: 22, departamento_id: 2, nombre: "Istmina", codigo_dane: "27361", ipm: 75.2, poblacion: 28000, mortalidad_infantil: 29.5 },
+  { id: 23, departamento_id: 18, nombre: "Arauca", codigo_dane: "81001", ipm: 48.7, poblacion: 92000, mortalidad_infantil: 16.1 },
+  { id: 24, departamento_id: 5, nombre: "Montería", codigo_dane: "23001", ipm: 35.2, poblacion: 460000, mortalidad_infantil: 12.4 },
 ];
 
 export const categorias: Categoria[] = [
@@ -208,6 +218,13 @@ export const inventario: Inventario[] = [
   { id: 22, producto_id: 24, donante_id: 2, lote: "LOT-D1-030", cantidad_kg: 1100, fecha_ingreso: subDays(today, 4), fecha_vencimiento: addDays(today, 5), estado: "Disponible" },
   { id: 23, producto_id: 14, donante_id: 20, lote: "LOT-SC-032", cantidad_kg: 680, fecha_ingreso: subDays(today, 18), fecha_vencimiento: addDays(today, 150), estado: "Disponible" },
   { id: 24, producto_id: 16, donante_id: 16, lote: "LOT-PO-035", cantidad_kg: 3600, fecha_ingreso: subDays(today, 5), fecha_vencimiento: addDays(today, 90), estado: "Disponible" },
+  // Additional dispatched items for richer data
+  { id: 25, producto_id: 9, donante_id: 1, lote: "LOT-EX-040", cantidad_kg: 1200, fecha_ingreso: subDays(today, 30), fecha_vencimiento: addDays(today, -2), estado: "Despachado", municipio_destino_id: 2 },
+  { id: 26, producto_id: 10, donante_id: 2, lote: "LOT-D1-041", cantidad_kg: 900, fecha_ingreso: subDays(today, 25), fecha_vencimiento: addDays(today, -1), estado: "Despachado", municipio_destino_id: 4 },
+  { id: 27, producto_id: 24, donante_id: 7, lote: "LOT-AR-042", cantidad_kg: 650, fecha_ingreso: subDays(today, 20), fecha_vencimiento: addDays(today, 5), estado: "Despachado", municipio_destino_id: 5 },
+  { id: 28, producto_id: 1, donante_id: 5, lote: "LOT-NU-043", cantidad_kg: 3200, fecha_ingreso: subDays(today, 28), fecha_vencimiento: addDays(today, 10), estado: "Despachado", municipio_destino_id: 6 },
+  { id: 29, producto_id: 3, donante_id: 3, lote: "LOT-CO-044", cantidad_kg: 1800, fecha_ingreso: subDays(today, 22), fecha_vencimiento: addDays(today, 3), estado: "Despachado", municipio_destino_id: 7 },
+  { id: 30, producto_id: 7, donante_id: 8, lote: "LOT-FG-045", cantidad_kg: 950, fecha_ingreso: subDays(today, 15), fecha_vencimiento: addDays(today, 1), estado: "Reservado", municipio_destino_id: 8 },
 ];
 
 // ==================== HELPERS ====================
@@ -240,10 +257,20 @@ export function getCategoriaById(id: number) {
   return categorias.find((c) => c.id === id);
 }
 
-// KPI calculations
+// ==================== KPI FUNCTIONS ====================
+
 export function getKilosRescatados(): number {
   return inventario
     .filter((i) => i.estado === "Despachado" || i.estado === "Reservado")
+    .reduce((sum, i) => sum + i.cantidad_kg, 0);
+}
+
+export function getKilosMicronutrientes(): number {
+  const fyvCategoriaId = categorias.find((c) => c.nombre === "Frutas y Verduras")?.id;
+  if (!fyvCategoriaId) return 0;
+  const fyvProductIds = productos.filter((p) => p.categoria_id === fyvCategoriaId).map((p) => p.id);
+  return inventario
+    .filter((i) => (i.estado === "Despachado" || i.estado === "Reservado") && fyvProductIds.includes(i.producto_id))
     .reduce((sum, i) => sum + i.cantidad_kg, 0);
 }
 
@@ -257,7 +284,66 @@ export function getMunicipiosAltoIPM(): Municipio[] {
   return municipios.filter((m) => m.ipm >= 60).sort((a, b) => b.ipm - a.ipm);
 }
 
-// Dispatch suggestions: products expiring in <=5 days → highest IPM municipalities
+// ==================== PRIORITY RANKING ====================
+
+export interface PrioridadNutricional {
+  municipio: Municipio;
+  departamento: Departamento;
+  kgProximosVencer: number;
+  score: number;
+  accion: "INMEDIATA" | "ALTA" | "MEDIA";
+}
+
+export function getPrioridadNutricional(): PrioridadNutricional[] {
+  const urgentInventory = inventario.filter(
+    (i) => i.estado === "Disponible" && getDaysUntilExpiry(i.fecha_vencimiento) <= 7
+  );
+  const totalUrgentKg = urgentInventory.reduce((s, i) => s + i.cantidad_kg, 0);
+
+  return municipios
+    .filter((m) => m.ipm >= 40)
+    .map((m) => {
+      const depto = getDepartamentoById(m.departamento_id)!;
+      // Distribute urgent kg proportionally to IPM
+      const kgProximosVencer = Math.round((m.ipm / 100) * (totalUrgentKg / municipios.filter((x) => x.ipm >= 40).length));
+      const score = Math.round(m.ipm * kgProximosVencer);
+      let accion: "INMEDIATA" | "ALTA" | "MEDIA" = "MEDIA";
+      if (score >= 80000) accion = "INMEDIATA";
+      else if (score >= 40000) accion = "ALTA";
+      return { municipio: m, departamento: depto, kgProximosVencer, score, accion };
+    })
+    .sort((a, b) => b.score - a.score);
+}
+
+// ==================== DONOR RANKING ====================
+
+export interface DonorRanking {
+  donante: Donante;
+  totalKg: number;
+  numLotes: number;
+}
+
+export function getDonantesRanking(): DonorRanking[] {
+  const donorMap = new Map<number, { totalKg: number; numLotes: number }>();
+  inventario.forEach((inv) => {
+    const existing = donorMap.get(inv.donante_id) || { totalKg: 0, numLotes: 0 };
+    existing.totalKg += inv.cantidad_kg;
+    existing.numLotes += 1;
+    donorMap.set(inv.donante_id, existing);
+  });
+
+  return Array.from(donorMap.entries())
+    .map(([donante_id, data]) => ({
+      donante: getDonanteById(donante_id)!,
+      totalKg: data.totalKg,
+      numLotes: data.numLotes,
+    }))
+    .filter((d) => d.donante)
+    .sort((a, b) => b.totalKg - a.totalKg);
+}
+
+// ==================== DISPATCH SUGGESTIONS ====================
+
 export function getDespachosSugeridos() {
   const urgentInventory = inventario
     .filter((i) => i.estado === "Disponible" && getDaysUntilExpiry(i.fecha_vencimiento) <= 5)
@@ -277,12 +363,13 @@ export function getDespachosSugeridos() {
       municipio,
       departamento: depto!,
       diasRestantes: getDaysUntilExpiry(inv.fecha_vencimiento),
-      prioridad: getDaysUntilExpiry(inv.fecha_vencimiento) <= 2 ? "CRÍTICA" as const : "ALTA" as const,
+      prioridad: getDaysUntilExpiry(inv.fecha_vencimiento) <= 2 ? ("CRÍTICA" as const) : ("ALTA" as const),
     };
   });
 }
 
-// Bubble chart data: IPM vs kg sent per municipality
+// ==================== BUBBLE CHART DATA ====================
+
 export function getBubbleChartData() {
   const sent = inventario.filter((i) => i.estado === "Despachado" || i.estado === "Reservado");
   return municipios
@@ -298,8 +385,40 @@ export function getBubbleChartData() {
         ipm: m.ipm,
         kgEnviados,
         poblacion: m.poblacion,
-        necesidad: Math.round(m.ipm * m.poblacion / 1000),
+        necesidad: Math.round((m.ipm * m.poblacion) / 1000),
       };
     })
     .sort((a, b) => b.ipm - a.ipm);
+}
+
+// ==================== IMPACT REPORT ====================
+
+export interface ImpactReport {
+  totalKgRescatados: number;
+  totalRaciones: number;
+  toneladasDesviadas: number;
+  litrosAguaAhorrados: number;
+  kgMetanoEvitados: number;
+  municipiosBeneficiados: number;
+  donantesPrincipales: string[];
+  kgMicronutrientes: number;
+}
+
+export function getImpactReport(): ImpactReport {
+  const totalKgRescatados = getKilosRescatados();
+  const toneladasDesviadas = totalKgRescatados / 1000;
+  const dispatched = inventario.filter((i) => i.estado === "Despachado" || i.estado === "Reservado");
+  const uniqueMunicipios = new Set(dispatched.map((i) => i.municipio_destino_id).filter(Boolean));
+  const topDonors = getDonantesRanking().slice(0, 5).map((d) => d.donante.nombre);
+
+  return {
+    totalKgRescatados,
+    totalRaciones: Math.round(totalKgRescatados / KG_POR_RACION),
+    toneladasDesviadas,
+    litrosAguaAhorrados: Math.round(toneladasDesviadas * RECURSOS_POR_TONELADA.litros_agua),
+    kgMetanoEvitados: Math.round(toneladasDesviadas * RECURSOS_POR_TONELADA.kg_metano),
+    municipiosBeneficiados: uniqueMunicipios.size,
+    donantesPrincipales: topDonors,
+    kgMicronutrientes: getKilosMicronutrientes(),
+  };
 }
