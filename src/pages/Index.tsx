@@ -6,15 +6,18 @@ import InsightsPanel from "@/components/InsightsPanel";
 import InventoryTable from "@/components/InventoryTable";
 import DonationForm from "@/components/DonationForm";
 import DispatchSuggestions from "@/components/DispatchSuggestions";
+import ConcientizacionSection from "@/components/ConcientizacionSection";
 
 const Index = () => {
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const [activeTab, setActiveTab] = useState("concientizacion");
 
   return (
     <div className="min-h-screen bg-background">
       <AppHeader activeTab={activeTab} onTabChange={setActiveTab} />
 
       <main className="container mx-auto px-4 py-6 space-y-6">
+        {activeTab === "concientizacion" && <ConcientizacionSection />}
+
         {activeTab === "dashboard" && (
           <>
             <KpiCards />
@@ -33,9 +36,7 @@ const Index = () => {
           </div>
         )}
 
-        {activeTab === "despachos" && (
-          <DispatchSuggestions />
-        )}
+        {activeTab === "despachos" && <DispatchSuggestions />}
       </main>
 
       <footer className="border-t mt-8 py-4">

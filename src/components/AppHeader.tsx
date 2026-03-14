@@ -1,4 +1,4 @@
-import { Wheat, BarChart3, Package, Truck } from "lucide-react";
+import { Wheat, BarChart3, Package, Truck, Megaphone } from "lucide-react";
 
 interface AppHeaderProps {
   activeTab: string;
@@ -6,6 +6,7 @@ interface AppHeaderProps {
 }
 
 const tabs = [
+  { id: "concientizacion", label: "Concientización", icon: Megaphone },
   { id: "dashboard", label: "Dashboard", icon: BarChart3 },
   { id: "inventario", label: "Inventario", icon: Package },
   { id: "despachos", label: "Despachos", icon: Truck },
@@ -30,12 +31,12 @@ export default function AppHeader({ activeTab, onTabChange }: AppHeaderProps) {
             </div>
           </div>
 
-          <nav className="flex gap-1 bg-primary-foreground/5 rounded-lg p-1">
+          <nav className="flex gap-1 bg-primary-foreground/5 rounded-lg p-1 overflow-x-auto">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => onTabChange(tab.id)}
-                className={`flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-md text-sm font-medium transition-all whitespace-nowrap ${
                   activeTab === tab.id
                     ? "bg-primary-foreground/15 text-primary-foreground"
                     : "text-primary-foreground/50 hover:text-primary-foreground/80"
